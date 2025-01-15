@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Welcome to Financial Health</h1>
+    <p>This is the app that will help you to improve your finances</p>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.username.label }}: {{ form.username() }}
+        </p>
+        <p>
+            {{ form.password.label }}: {{ form.password() }}
+        </p>
+        <p>
+            {{ form.submit() }}
+        </p>
+        <p>
+            Not registred yet? <a href="{{ url_for('register') }}">Register</a>
+        </p>
+    </form>
+{% endblock %}

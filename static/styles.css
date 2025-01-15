@@ -1,0 +1,12 @@
+.flashes {
+    list-style: none;
+    padding: 0;
+}
+
+.flashes li.success {
+    color: green;
+}
+
+.flashes li.error {
+    color: red;
+}
