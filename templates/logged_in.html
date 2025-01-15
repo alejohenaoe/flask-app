@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if current_user.is_authenticated %}
+        <h1>Welcome, {{ user.name}} </h1>
+        <p>Here is your info: </p>
+        <ul>
+            <li>User ID: {{ user.id}} </li>
+            <li>Username: {{ user.username }}</li>        
+        </ul>
+        
+        <p>
+            <a href="{{ url_for('edit_user', username=user.username)}}">Edit</a> |
+            <a href="">Delete</a> | 
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </p>
+        
+    {% else %}
+        <a href="{{ url_for('home')}}">Login</a>
+    {% endif %}
+
+{% endblock %}
