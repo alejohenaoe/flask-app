@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2>Delete User</h2>
+    <p>Are you sure you want to delete your account, {{user.name}}?</p>
+    
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <button type="submit" name="action" value="delete" class="btn btn-danger">{{ form.delete.label.text }}</button>
+        <button type="submit" name="action" value="cancel" class="btn btn-secondary">{{ form.cancel.label.text }}</button>
+    </form>
+
+{% endblock%}
