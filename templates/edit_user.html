@@ -2,13 +2,12 @@
 
 {% block content %}
 
-    <h1>Edit User</h1>
+    <h2>Edit User</h2>
+    <p>Update your information</p>
     <form method="POST">
         {{ edit_form.hidden_tag() }}
         <p>{{ edit_form.username.label }}: {{ edit_form.username() }} </p>
         <p>{{ edit_form.name.label }}: {{ edit_form.name() }} </p>
-        <p>{{ edit_form.password.label }}: {{ edit_form.password() }} </p>
-        <p>{{ edit_form.confirm_password.label }}: {{ edit_form.confirm_password() }} </p>
         <p>{{ edit_form.update() }} </p>
     </form>
 

@@ -1,5 +1,5 @@
-from flask import Flask, render_template, flash, redirect, url_for
-from forms import LoginForm, RegisterForm, EditUserForm
+from flask import Flask, render_template, flash, redirect, url_for, request
+from forms import LoginForm, RegisterForm, EditUserForm, DeleteUserForm
 from models import db, User
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 
@@ -80,23 +80,50 @@ def edit_user(username):
         flash('You need to log in first', 'error')
         return redirect(url_for('home'))
     
-    edit_form = EditUserForm()
+    edit_form = EditUserForm(
+        username=current_user.username, 
+        name=current_user.name
+        )
 
     if edit_form.validate_on_submit():
         current_user.username = edit_form.username.data
         current_user.name = edit_form.name.data
-        current_user.password = edit_form.password.data
 
         # Verifying if the user has changed the username, name or password
         if current_user.username:
             current_user.username = edit_form.username.data
         if current_user.name:
             current_user.name = edit_form.name.data
-        if current_user.password:
-            current_user.set_password(edit_form.password.data)
         
         db.session.commit()
         flash('User updated successfully', 'success')
         return redirect(url_for('logged_in', username=current_user.username))
 
     return render_template('edit_user.html', edit_form=edit_form)
+
+@app.route('/delete/<username>', methods=['GET', 'POST'])
+@login_required
+def delete_user(username):
+
+    delete_form = DeleteUserForm()
+    user_to_delete = User.query.filter_by(username=username).first()
+
+    if not user_to_delete:
+        flash('User not found', 'error')
+        return redirect(url_for('home'))
+
+    if delete_form.validate_on_submit():
+        
+        # Identificar el botón presionado
+        action = request.form.get('action')
+        
+        if action == 'cancel':
+            return redirect(url_for('logged_in', username=current_user.username))
+        
+        elif action == 'delete':
+            db.session.delete(user_to_delete)
+            db.session.commit()
+            flash('User deleted successfully', 'success')
+            return redirect(url_for('home'))
+        
+    return render_template('delete_user.html', user=user_to_delete, form=delete_form)

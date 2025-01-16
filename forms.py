@@ -11,12 +11,14 @@ class RegisterForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     name = StringField('Name', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password', message='Passwords must match')])
     submit = SubmitField('Register')
 
 class EditUserForm(FlaskForm):
-    username = StringField('Username')
-    name = StringField('Name')
-    password = PasswordField('New Password')
-    confirm_password = PasswordField('Confirm New Password', validators=[EqualTo('password')])
+    username = StringField('Username', validators=[DataRequired()])
+    name = StringField('Name', validators=[DataRequired()])
     update = SubmitField('Update')
+
+class DeleteUserForm(FlaskForm):
+    delete = SubmitField('Delete')
+    cancel = SubmitField('Cancel')
