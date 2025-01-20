@@ -1,22 +1,30 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block nav%}
+    {{ super() }}
+    <a class="nav-link active" aria-current="page" href="{{ url_for('home')}}">Home</a>
+{% endblock %}
 
-    <h1>Welcome to Financial Health</h1>
-    <p>This is the app that will help you to improve your finances</p>
-    <form method="POST">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}: {{ form.username() }}
-        </p>
-        <p>
-            {{ form.password.label }}: {{ form.password() }}
-        </p>
-        <p>
-            {{ form.submit() }}
-        </p>
-        <p>
-            Not registred yet? <a href="{{ url_for('register') }}">Register</a>
-        </p>
-    </form>
+{% block content %}
+    <div class="container">
+        <h1 class="text-secondary">Financial Health</h1>
+        <p>This is the app that will help you to improve your finances</p>
+        <div>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.username.label }} <br> {{ form.username() }}
+                </p>
+                <p>
+                    {{ form.password.label }} <br> {{ form.password() }}
+                </p>
+                <p>
+                    {{ form.submit(class='btn btn-primary') }}
+                </p>
+                <p>
+                    <a href="{{ url_for('register') }}">Sign Up</a>
+                </p>
+            </form>
+        </div>
+    </div>
 {% endblock %}

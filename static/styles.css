@@ -10,3 +10,12 @@
 .flashes li.error {
     color: red;
 }
+
+.container {
+    border: 1px solid #1d91b5;
+    width: 40%;
+    border-radius: 20px;
+    padding: 25px;
+    margin: 20px;
+    place-items: center;
+}

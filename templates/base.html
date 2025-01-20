@@ -9,8 +9,11 @@
 
 </head>
 <body>
-    <nav>
-        <a href="/">Home</a>
+    <nav class="nav">
+        {% block nav%}
+        <a class="nav-link active" aria-current="page" href="{{ url_for('home')}}">Login</a>
+        <a class="nav-link" href="{{ url_for('register')}}">Sign Up</a>
+        {% endblock %}
     </nav>
 
     {% include 'flash_messages.html' %}
