@@ -3,6 +3,14 @@ from forms import LoginForm, RegisterForm, EditUserForm, DeleteUserForm, Transac
 from models import db, User, Income, Outcome
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 
+# Data Analysis libraries
+import pandas as pd
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 # App initialization
 app = Flask(__name__)
 login_manager = LoginManager()
@@ -63,7 +71,47 @@ def logged_in(username):
     if username != current_user.username:
         flash('You need to log in first', 'info')
         return redirect(url_for('home'))
-    return render_template('logged_in.html', user=current_user)
+    
+    incomes = Income.query.filter_by(user_id=current_user.id).all()
+    outcomes = Outcome.query.filter_by(user_id=current_user.id).all()
+
+    total_income = sum([income.amount for income in incomes])
+    total_outcome = sum([outcome.amount for outcome in outcomes])
+
+    
+
+    # Creating the figure to show the income vs outcome
+    ## Setting the grid style of the plot
+    sns.set_style('whitegrid')
+
+    ## Creating the figure and the axis (barplot)
+    fig = plt.figure(figsize=(10, 5))
+    ax = sns.barplot(
+        x=['Income', 'Outcome'], 
+        y=[total_income, total_outcome], 
+        palette=['green', 'red'],
+        width=0.3  # Ancho de las barras
+    )
+
+    # Add the values to the bars to show the total income and outcome on top of the bars
+    for bar, value in zip(ax.patches, [total_income, total_outcome]):
+        ax.text(  
+            bar.get_x() + bar.get_width() / 2,   
+            bar.get_height(), 
+            f' {value}',                         # Texto a mostrar
+            ha='center',                         # Alineación horizontal
+            va='bottom'                          # Alineación vertical
+        )
+
+    # Seting the title and labels
+    plt.title('Income vs Outcome')
+    plt.ylabel('Amount ($)')
+
+    # Saving the plot
+    plt.savefig('static/plot.png')
+    plt.close(fig)
+
+    return render_template('logged_in.html', user=current_user, total_income=total_income, total_outcome=total_outcome, plot_url=url_for('static', filename='plot.png'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
