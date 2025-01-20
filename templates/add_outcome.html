@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="text-danger">Add Outcome</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.amount.label }} {{ form.amount() }}
+    </p>
+    <p>
+        {{ form.type.label }} {{ form.type() }}
+    </p>
+    <p>
+        {{ form.description.label }} {{ form.description() }}
+    </p>
+    <button type="submit" class="btn btn-danger">Add Outcome</button>
+</form>
+{% endblock %}
