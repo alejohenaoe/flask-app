@@ -4,18 +4,38 @@
 }
 
 .flashes li.success {
-    color: green;
+    background-color: rgba(0, 128, 0, 0.275);
+    text-align: center;
 }
 
 .flashes li.error {
-    color: red;
+    background-color: rgba(255, 0, 0, 0.276);
+    text-align: center;
 }
 
 .container {
-    border: 1px solid #1d91b5;
+    border: 2px solid #1d92b5a8;
     width: 40%;
     border-radius: 20px;
     padding: 25px;
     margin: 20px;
     place-items: center;
+}
+
+.background-success {
+    background-color: rgb(99, 196, 99, 0.8);
+    border-radius: 15px;
+    margin: 10px;
+}
+
+.background-warning {
+    background-color: rgba(255, 255, 0, 0.8);
+    border-radius: 15px;
+    margin: 10px;
+}
+
+.background-danger {
+    background-color: rgb(223, 109, 109, 0.8);
+    border-radius: 15px;
+    margin: 10px;
 }
