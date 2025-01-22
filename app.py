@@ -2,6 +2,7 @@ from flask import Flask, render_template, flash, redirect, url_for, request
 from forms import LoginForm, RegisterForm, EditUserForm, DeleteUserForm, TransactionForm
 from models import db, User, Income, Outcome
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+import os
 
 # Data Analysis libraries
 import pandas as pd
@@ -326,4 +327,6 @@ def delete_transaction(id, transaction_type):
         return redirect(url_for('logged_in', username=current_user.username))
     
     return redirect(url_for('logged_in', username=current_user.username))
-    
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
