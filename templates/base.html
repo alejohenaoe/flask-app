@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Health App</title>
+    <title>MWS App | (Money Well Spent)</title>
+    <!-- css -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Bootstrap js -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Page icon -->
+    <link rel="icon" type="image/x-icon" href="static/images/icon.png">
+    <!-- Bootstrap buttons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 </head>
 <body>
     
     <!-- Navbar-->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-light border-bottom border-body" data-bs-theme="light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="{{ url_for('home')}}">Login</a>
+          <a class="navbar-brand" href="{{ url_for('home')}}">
+            <img src=" {{ url_for('static', filename='images/icon.png') }}" width="40px">
+          </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -21,7 +29,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               {% if not current_user.is_active %}
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ url_for('register')}}">Sign in</a>
+                <a class="nav-link active" aria-current="page" href="{{ url_for('register')}}">Sign up</a>
               </li>
               {% endif %}
               <li class="nav-item">

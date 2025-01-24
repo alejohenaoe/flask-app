@@ -1,29 +1,26 @@
 {% extends 'base.html' %}
 
-{% block nav%}
-    {{ super() }}
-    <a class="nav-link active" aria-current="page" href="{{ url_for('home')}}">Home</a>
-{% endblock %}
-
 {% block content %}
-    <div class="container">
-        <h1 class="text-secondary">Financial Health</h1>
-        <p>This is the app that will help you to improve your finances</p>
-        <div>
+    <div class="container text-center">
+        <div><img src="{{ url_for('static', filename='images/logo.png') }}" width=200px></div>
+        <div class="text-center">
             <form method="POST">
                 {{ form.hidden_tag() }}
-                <p>
-                    {{ form.username.label }} <br> {{ form.username() }}
-                </p>
-                <p>
-                    {{ form.password.label }} <br> {{ form.password() }}
-                </p>
-                <p>
-                    {{ form.submit(class='btn btn-primary') }}
-                </p>
-                <p>
-                    <a href="{{ url_for('register') }}">Sign Up</a>
-                </p>
+                <div class="form-floating mb-3 mx-auto" style="max-width: 355px;">
+                    {{ form.username(class="form-control", id="floatingInput", placeholder="ph") }}
+                    <label for="floatingInput">{{ form.username.label.text }}</label>
+                </div>
+                <div class="form-floating mb-3 mx-auto" style="max-width: 355px;">
+                    {{ form.password(class="form-control", id="floatingInput", placeholder="ph") }}
+                    <label for="floatingInput">{{ form.password.label.text }}</label>
+                </div>
+                <div>
+                    {{ form.submit(class='btn btn-outline-success') }}
+                </div>
+                <div>
+                    <br>
+                    Not have an account yet? <a href="{{ url_for('register') }}"> Sign up</a>
+                </div>
             </form>
         </div>
     </div>

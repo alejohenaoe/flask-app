@@ -73,13 +73,32 @@ def logged_in(username):
         flash('You need to log in first', 'info')
         return redirect(url_for('home'))
     
+    # Setting the forms to send to the modals
+    income_form = TransactionForm()
+    income_form.type.choices = income_choices
+
+    outcome_form = TransactionForm()
+    outcome_form.type.choices = outcome_choices
+
+    if request.method == "POST":
+        if income_form.validate_on_submit():
+            add_income(income_form)
+            return redirect(url_for('logged_in', username=username))
+        
+        elif outcome_form.validate_on_submit():
+            add_outcome(outcome_form)
+            return redirect(url_for('logged_in', username=username))
+
+        else: 
+            flash('Faild to complete, check inputs', 'error')
+            return redirect(url_for('logged_in', username=username))
+
+    
     incomes = Income.query.filter_by(user_id=current_user.id).all()
     outcomes = Outcome.query.filter_by(user_id=current_user.id).all()
 
     total_income = sum([income.amount for income in incomes])
     total_outcome = sum([outcome.amount for outcome in outcomes])
-
-    
 
     # Creating the figure to show the income vs outcome
     ## Setting the grid style of the plot
@@ -112,7 +131,14 @@ def logged_in(username):
     plt.savefig('static/plot.png')
     plt.close(fig)
 
-    return render_template('logged_in.html', user=current_user, total_income=total_income, total_outcome=total_outcome, plot_url=url_for('static', filename='plot.png'))
+    return render_template('logged_in.html', 
+                           user=current_user, 
+                           total_income=total_income, 
+                           total_outcome=total_outcome, 
+                           plot_url=url_for('static', filename='plot.png'),
+                           income_form=income_form,
+                           outcome_form=outcome_form
+                           )
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -195,58 +221,42 @@ def delete_user(username):
         
     return render_template('delete_user.html', user=user_to_delete, form=delete_form)
 
+## -- Next comented becouse modal was added to logged_in endpoint --
 # Route to add an income
-@app.route('/add_income/<username>', methods=['GET', 'POST'])
-@login_required
-def add_income(username):
-
-    income_form = TransactionForm()
-    income_form.type.choices = income_choices
-
-    if request.method == 'POST':
-        if income_form.validate_on_submit():
-
-            new_income = Income(
-                user_id = current_user.id,
-                amount = income_form.amount.data,
-                type = income_form.type.data,
-                description = income_form.description.data
-            )
-            db.session.add(new_income)
-            db.session.commit()
-            flash('Income added successfully', 'success')
-            return redirect(url_for('logged_in', username=current_user.username))
-        else:
-            flash('Failed to add income. Please check your input.', 'danger')
+# @app.route('/add_income/<username>', methods=['GET', 'POST'])
+# @login_required
+def add_income(income_form):
         
-    return render_template('add_income.html', form=income_form)
+    new_income = Income(
+        user_id = current_user.id,
+        amount = income_form.amount.data,
+        type = income_form.type.data,
+        description = income_form.description.data
+        )
+        
+    db.session.add(new_income)
+    db.session.commit()
+    flash('Income added successfully', 'success')
+    return redirect(url_for('logged_in', username=current_user.username))
+      
+    # return render_template('add_income.html', form=income_form)
 
 # Route to add an outcome
-@app.route('/add_outcome/<username>', methods=['GET', 'POST'])
-@login_required
-def add_outcome(username):
+# @app.route('/add_outcome/<username>', methods=['GET', 'POST'])
+# @login_required
+def add_outcome(outcome_form):
 
-    outcome_form = TransactionForm()
-    outcome_form.type.choices = outcome_choices
+    new_outcome = Outcome(
+        user_id = int(current_user.id),
+        amount = outcome_form.amount.data,
+        type = outcome_form.type.data,
+        description = outcome_form.description.data
+        )
 
-    if request.method == 'POST':
-        if outcome_form.validate_on_submit():
-
-            new_outcome = Outcome(
-                user_id = int(current_user.id),
-                amount = outcome_form.amount.data,
-                type = outcome_form.type.data,
-                description = outcome_form.description.data
-            )
-
-            db.session.add(new_outcome)
-            db.session.commit()
-            flash('Outcome added successfully', 'success')
-            return redirect(url_for('logged_in', username=current_user.username))
-        else:
-            flash('Failed to add income. Please check your input.', 'danger')
-    
-    return render_template('add_outcome.html', form=outcome_form)
+    db.session.add(new_outcome)
+    db.session.commit()
+    flash('Outcome added successfully', 'success')
+    return redirect(url_for('logged_in', username=current_user.username))
 
 # Functions to delete and edit incomes
 @app.route('/delete_income/<int:id>', methods=['GET', 'POST'])
