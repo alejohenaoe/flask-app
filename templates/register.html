@@ -1,34 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Register</h1>
+<div class="container text-center">
+    
+    <h1 class="text-secondary my-4 ">Register</h1>
+
     <form method="POST">
         {{ form.hidden_tag() }}
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-3 mx-auto" style="width: 355px;">
             {{ form.username(class="form-control", id="floatingInput", placeholder="ph") }}
             <label for="floatingInput">{{ form.username.label.text }}</label>
         </div>
         
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-3 mx-auto" style="width: 355px;">
             {{ form.name(class="form-control", id="floatingInput", placeholder="ph") }}
             <label for="floatingInput">{{ form.name.label.text }}</label>
         </div>
 
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-3 mx-auto" style="width: 355px;">
             {{ form.password(class="form-control", id="floatingInput", placeholder="ph") }}
             <label for="floatingInput">{{ form.password.label.text }}</label>
         </div>
 
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-3 mx-auto" style="width: 355px;">
             {{ form.confirm_password(class="form-control", id="floatingInput", placeholder="ph") }}
             <label for="floatingInput">{{ form.confirm_password.label.text }}</label>
         </div>
 
-        <button type="submit" class="btn btn-primary">Register</button>
+        <button type="submit" class="btn btn-outline-secondary">
+            <!-- image to the button -->
+            <img src="{{ url_for('static', filename='images/icon.png') }}" width=20px>
+            Sign up
+        </button>
     </form>
-
-    
-    
-
+    <br>
     <p>Already registred? <a href="{{ url_for('home') }}">Login</a></p>
+</div>
+
 {% endblock %}
