@@ -20,7 +20,7 @@
 }
 
 .background-warning {
-    background-color: rgba(0, 42, 255, 0.507);
+    background-color: #D0DDD0;
     border-radius: 15px;
     margin: 10px;
 }
@@ -33,4 +33,92 @@
 
 .form-width {
     width: 540px;
+}
+
+
+/* Modificaciones para mejora */
+
+body {
+    background-color: #f7f2fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h5 {
+    color: #6d6875;
+}
+
+table {
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+}
+
+th {
+    background-color: #9a8c98;
+    color: #030303;
+}
+
+td, th {
+    text-align: center;
+    vertical-align: middle;
+    color: #444243;
+}
+
+
+.btn-1 {
+    border-radius: 50px;
+    border-color: #444243;
+    font-size: 0.9rem;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    justify-content: end;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+.btn-primary {
+    background-color: #56ccf2;
+    border-color: #56ccf2;
+}
+
+.btn-success {
+    background-color: #AAB99A;
+    border-color: #D0DDD0;
+}
+
+.btn-warning {
+    background-color: #f2c94c;
+    border-color: #f2c94c;
+}
+
+.btn-danger {
+    background-color: #eb5757;
+    border-color: #eb5757;
+}
+
+.btn i {
+    margin-right: 5px;
+}
+
+.carousel-inner img {
+    border-radius: 10px;
+}
+
+.table thead th {
+    font-weight: bold;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(15, 13, 13, 0.8); /* Naranja translúcido */
+    color: #030303;
+}
+
+.top-content {
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
 }

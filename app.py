@@ -2,6 +2,7 @@ from flask import Flask, render_template, flash, redirect, url_for, request
 from forms import LoginForm, RegisterForm, EditUserForm, DeleteUserForm, TransactionForm
 from models import db, User, Income, Outcome
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask_migrate import Migrate
 import os
 
 # Data Analysis libraries
@@ -15,6 +16,7 @@ import seaborn as sns
 # App initialization
 app = Flask(__name__)
 login_manager = LoginManager()
+migrate = Migrate(app, db)
 
 # App configuration
 app.config['SECRET_KEY'] = 'secretKey'
@@ -24,6 +26,10 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Components initialization
 db.init_app(app)
 login_manager.init_app(app)
+
+#Crear las tablas
+with app.app_context():
+    db.create_all()
 
 # Redirecting to login page and message to not logged in users
 login_manager.login_view = 'home'
@@ -46,10 +52,6 @@ outcome_choices = [('Food', 'Food'),
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-
-#Crear las tablas
-with app.app_context():
-    db.create_all()
 
 # Routes definition
 @app.route('/', methods=['GET', 'POST'])
