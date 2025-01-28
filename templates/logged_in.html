@@ -1,186 +1,247 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% if current_user.is_authenticated %}
 
-    <!-- inicio pruebas -->
-     
-    <!-- fin pruebas -->
-    
-    <h2 class="text-center">Hello, {{ user.name}}! </h2>
-    <div class="container"> 
-        <!-- Showing the total balance-->
+    <!-- Seccion principal -->
+    <div class="container mt-4">
+    <h2 class="text-center" style="text-transform: capitalize;">Bienvenido,  {{user.name}}!</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed metus nunc. Donec volutpat libero quis pretium pulvinar. Vestibulum vitae turpis arcu. Integer dignissim sapien purus, sit amet fermentum odio hendrerit ut. Phasellus tempor nisi at turpis egestas laoreet. Proin iaculis diam eu feugiat semper</p>
+    <!-- barra de progreso -->
+    <h5> Ingreso vs Gasto (azul)</h5>
+    <div class="progress mb-5" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 75%"></div>
+    </div>
+
         <div class="row">
-            <div class="col background-success text-center">Income<br>${{ total_income }}</div>
-            <div class="col background-warning text-center">Outcome<br>$ {{ total_outcome }}</div>
-            {% if (total_income-total_outcome) >= 0 %} 
-                <div class="col background-success text-center"> Balance(Positive)<br>
-            {% else %}
-                <div class="col background-danger text-center"> Balance (Negative)<br>
-            {% endif %}
-            $ {{ total_income - total_outcome }}
-            </div>
-        </div>    
-    </div>
-
-    {% else %}
-        <a href="{{ url_for('home')}}">Login</a>
-    {% endif %}
-
-    <div class="row">
-    <!-- Showing Incomes and Outcomes on a table-->
-        <div class="col m-4">
-            {% if user.incomes %}
-                <h4 class="text-center text-success">Incomes</h4>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Amount ($)</th>
-                            
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for income in user.incomes %}
+            <!-- Columna Izquierda -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 mb-3">
+                    <h5>Situación Financiera Actual</h5>
+                    <table class="table">
+                        <thead>
+                            <tr class="text-center background-warning">
+                                <th>Concepto</th>
+                                <th>Valor</th>
+                                <th>Editar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             <tr>
-                                <td>{{ income.date }}</td>
-                                <td>{{ income.amount }}</td>
-                                <td> 
-                                    <a class="btn btn-secondary" href="{{ url_for('edit_transaction', id=income.id, transaction_type='income') }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
-                                            <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
-                                        </svg>
-                                    </a>
-                                    <a class="btn btn-danger" href="{{ url_for('delete_transaction', id=income.id, transaction_type='income') }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
-                                            <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
-                                        </svg>
-                                    </a>  
+                                <td>Deuda</td>
+                                <td>13098</td> 
+                                <td>
+                                    <button class="btn-1 btn-warning">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
                                 </td>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            {% endif %}
-
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#incomeModal">
-                New Income
-            </button>
-
-        </div>
-
-        <!-- Showing Outcomes on a table-->
-        <div class="col m-4">           
-            {% if user.outcomes %}
-                <h4 class="text-danger text-center">Outcomes</h4>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Amount (%)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for outcome in user.outcomes %}
                             <tr>
-                                <td>{{ outcome.date }}</td>
-                                <td>{{ outcome.amount }}</td>
-                                
-                                <td>                                   
-                                    <a class="btn btn-secondary" href="{{ url_for('edit_transaction', id=outcome.id, transaction_type='outcome') }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
-                                            <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
-                                        </svg>
-                                    </a>
-                                    <a class="btn btn-danger" href="{{ url_for('delete_transaction', id=outcome.id, transaction_type='outcome') }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
-                                            <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
-                                        </svg>
-                                    </a>
+                                <td>Ahorro</td>
+                                <td>1439193</td>
+                                <td>
+                                    <button class="btn-1 btn-warning">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
                                 </td>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            {% endif %}
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#outcomeModal">
-                New Outcome
-            </button>
-        </div>
-    </div>
-    <div class="container">
-        {% if plot_url %}
-            <div class="text-center">
-                <img src="{{ plot_url }}" alt="Income vs Outcome Plot" class="img-fluid">
-            </div>
-        {% endif %}
-    </div>
-
-    <!-- Modals -->
-     <!-- income modal -->
-     <div class="modal fade" id="incomeModal" tabindex="-1" aria-labelledby="incomeModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color: rgba(42, 209, 106, 0.835);">
-            <h1 class="modal-title fs-5" id="incomeModalLabel">Income</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="POST">
-                    {{ income_form.hidden_tag() }}
-                    <p>
-                        {{ income_form.amount.label }} {{ income_form.amount() }}
-                    </p>
-                    <p>
-                        {{ income_form.type.label }} {{ income_form.type() }}
-                    </p>
-                    <p>
-                        {{ income_form.description.label }} {{ income_form.description() }}
-                    </p>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-outline-primary">Add  <i class="bi bi-plus-circle-fill"></i></button>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-end">
+                        
                     </div>
-                </form>
-            </div>
-            
-        </div>
-        </div>
-    </div>
+                </div>
 
-
-
-    <!-- outcome modal -->
-    <div class="modal fade" id="outcomeModal" tabindex="-1" aria-labelledby="outcomeModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color: rgba(208, 27, 27, 0.74);">
-            <h1 class="modal-title fs-5" id="outcomeModalLabel">New outcome</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="POST">
-                    {{ outcome_form.hidden_tag() }}
-                    <p>
-                        {{ outcome_form.amount.label }} {{ outcome_form.amount() }}
-                    </p>
-                    <p>
-                        {{ outcome_form.type.label }} {{ outcome_form.type() }}
-                    </p>
-                    <p>
-                        {{ outcome_form.description.label }} {{ outcome_form.description() }}
-                    </p>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-outline-primary">Add  <i class="bi bi-plus-circle-fill"></i></button>
+                <div class="mb-3">
+                    <h5>Deudas a Corto Plazo</h5>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr class="text-center background-warning">
+                                <th>Concepto</th>
+                                <th>Valor</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Deuda Papá</td>
+                                <td>50000</td>
+                                <td>
+                                    <button class="btn-1 btn-danger">
+                                        <i class="bi bi-trash3"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Deuda Kathe</td>
+                                <td>10000</td>
+                                <td>
+                                    <button class="btn-1 btn-danger">
+                                        <i class="bi bi-trash3"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn-1 btn-sm btn-success">
+                            <i class="bi bi-plus-circle"></i> Agregar Deuda
+                        </button>
                     </div>
-                </form>
+                </div>
+
+                <div>
+                    <h5>Gastos desde Ahorro</h5>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr class="text-center background-warning">
+                                <th>Fecha</th>
+                                <th>Concepto</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>17-ago</td>
+                                <td>Mercado</td>
+                                <td>48550</td>
+                            </tr>
+                            <tr>
+                                <td>18-ago</td>
+                                <td>Gasolina</td>
+                                <td>13400</td>
+                            </tr>
+                            <tr>
+                                <td>20-ago</td>
+                                <td>Elder Scroll</td>
+                                <td>14970</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn-1 btn-sm btn-success float-end">
+                            <i class="bi bi-plus-circle"></i> Agregar Gasto
+                        </button>
+                    </div>
+                </div>
             </div>
-            
-        </div>
+
+            <!-- Columna Derecha -->
+            <div class="col-md-6 col-lg-8">
+                <div class="top-content my-2 px-3 py-1" style="background-color: #C9DABF;"> 
+                    <h1>Seguimiento por Mes:</h1>
+                    <h5 class="text-secondary">Julio</h5>
+                </div>
+                <div class="mb-3">
+                    <table class="table table-bordered ">
+                        <thead>
+                            <tr class="text-center" style="background-color: rgb(15, 157, 157, 0.5);">
+                                <th>Descripción</th>
+                                <th>Ingresos</th>
+                                <th>Gastos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ingreso Mensual</td>
+                                <td>1248000</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>MacBook 2017</td>
+                                <td>140000</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Moto</td>
+                                <td></td>
+                                <td>266452</td>
+                            </tr>
+                            <tr>
+                                <td>Tarjeta Crédito</td>
+                                <td></td>
+                                <td>400000</td>
+                            </tr>
+                            <tr>
+                                <td>Impuestos</td>
+                                <td></td>
+                                <td>12450</td>
+                            </tr>
+                            <tr>
+                                <td>Apple</td>
+                                <td></td>
+                                <td>32300</td>
+                            </tr>
+                            <tr>
+                                <td>Internet</td>
+                                <td></td>
+                                <td>58700</td>
+                            </tr>
+                            <tr>
+                                <td>D1</td>
+                                <td></td>
+                                <td>250270</td>
+                            </tr>
+                            <tr>
+                                <td>Restaurantes</td>
+                                <td></td>
+                                <td>130400</td>
+                            </tr>
+                            <tr>
+                                <td>Otros</td>
+                                <td></td>
+                                <td>275000</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Total</strong></td>
+                                <td>1388000</td>
+                                <td>1425572</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <button class="btn-1 btn-sm btn-success" >
+                                        <i class="bi bi-plus-circle"></i> Ingreso
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="btn-1 btn-sm btn-danger">
+                                        <i class="bi bi-plus-circle"></i> Gasto
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div id="carouselExampleIndicators" class="carousel slide">
+                    <div class="carousel-indicators">
+                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div>
+                    <div class="carousel-inner">
+                      <div class="carousel-item active">
+                        <img src="static/plot.png" class="d-block w-100" alt="...">
+                      </div>
+                      <div class="carousel-item">
+                        <img src="static/plot.png" class="d-block w-100" alt="...">
+                      </div>
+                      <div class="carousel-item">
+                        <img src="static/plot.png" class="d-block w-100" alt="...">
+                      </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                  </div>
+            </div>
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.js"></script>
 {% endblock %}
