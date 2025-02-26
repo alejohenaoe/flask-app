@@ -15,6 +15,10 @@ Puedes probar la aplicación en el siguiente enlace:
 
 🔗 [Flask Financial Health App](https://flask-app-rc8n.onrender.com)
 
+Nota: La primera carga de la aplicación puede demorar unos segundos, ya que el servicio de Render pone en reposo la aplicación después de 15 minutos de inactividad.
+
+Importante: Los datos ingresados en la aplicación son efímeros. Cualquier usuario creado se eliminará automáticamente después de un período determinado de inactividad.
+
 ## Uso
 
 ### Registro de Usuario
@@ -39,13 +43,6 @@ Después de iniciar sesión, los usuarios pueden ver su panel personal, donde se
 
 ![Panel de Usuario](static/images/dashboard.png)
 
-## Usuario de Prueba
-
-Para propósitos de prueba, puedes utilizar las siguientes credenciales:
-
-- **Nombre de Usuario**: `Alejo`
-- **Contraseña**: `alejo`
-
 ## Contribuciones
 
 Las contribuciones son bienvenidas. Por favor, sigue estos pasos para contribuir:
@@ -59,6 +56,7 @@ Las contribuciones son bienvenidas. Por favor, sigue estos pasos para contribuir
 ## Licencia
 
 Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
+
 
 
 
